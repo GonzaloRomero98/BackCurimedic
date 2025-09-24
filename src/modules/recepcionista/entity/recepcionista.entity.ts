@@ -45,6 +45,13 @@ export class Recepcionista{
         nullable: true,
     })
     direccion!: string;
+
+    @Column({
+        type:'int',
+    })
+    comuna_id!:number;
+
+    
     @OneToOne(()=> Usuario,(usuario)=> usuario.medico,{
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

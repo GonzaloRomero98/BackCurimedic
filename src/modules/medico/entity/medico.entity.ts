@@ -53,6 +53,11 @@ export class Medico{
     })
     direccion!:string;
 
+    @Column({
+        type:'int',
+    })
+    comuna_id!:number;
+
     
     @Column({
         type:'varchar',

@@ -55,6 +55,12 @@ export class Paciente {
     })
     direccion!: string;
 
+    @Column({
+        type:'int',
+    })
+    comuna_id!:number;
+
+
     @OneToOne(()=>Usuario,(usuario) => usuario.paciente, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
