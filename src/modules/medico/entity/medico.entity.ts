@@ -1,7 +1,8 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Especialidad } from "src/modules/especialidad/entity/especialidad.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, RelationId } from "typeorm";
 
 @Entity('medico')
 export class Medico{
@@ -58,13 +59,6 @@ export class Medico{
     })
     comuna_id!:number;
 
-    
-    @Column({
-        type:'varchar',
-        length:255,
-        nullable:false
-    })
-    especialidad!:string;
 
     @OneToOne(()=> Usuario,(usuario)=> usuario.medico,{
         onDelete: 'CASCADE',
@@ -75,6 +69,20 @@ export class Medico{
         referencedColumnName: 'id',
     })
     usuario!:Usuario;
+
+    @ManyToOne(()=>Especialidad,{
+        nullable:true,
+        onDelete:'SET NULL',
+        onUpdate:'CASCADE'
+    })
+    @JoinColumn({
+        name:'especialidad_id',
+        referencedColumnName:'especialidad_id'
+    })
+    especialidad!:Especialidad;
+
+    @RelationId((medico: Medico)=> medico.especialidad)
+    especialidad_id?:number;
 
    /* @OneToMany(()=> AgendaCita,(agendacita)=>agendacita.medico)
     agendacita!:AgendaCita[]*/

@@ -4,9 +4,15 @@ import { MedicoService } from "./medico.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Medico } from "./entity/medico.entity";
 import { Usuario } from "../usuario/entity/usuario.entity";
+import { ComunaModule } from "../comuna/comuna.module";
+import { EspecialidaModule } from "../especialidad/especialida.module";
 
 @Module({
-    imports:[TypeOrmModule.forFeature([Medico,Usuario])],
+    imports:[
+        TypeOrmModule.forFeature([Medico,Usuario]),
+        ComunaModule,
+        EspecialidaModule
+    ],
     controllers:[MedicoController],
     providers:[MedicoService],
     exports:[MedicoService]

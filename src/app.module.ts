@@ -7,6 +7,7 @@ import { MedicoModule } from './modules/medico/medico.module';
 import { RecepcionistaModule } from './modules/recepcionista/recepcionista.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
+import { EspecialidaModule } from './modules/especialidad/especialida.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { AuthModule } from './modules/auth/auth.module';
     AdministradorModule,
     MedicoModule,
     RecepcionistaModule,
+    EspecialidaModule,
     AuthModule
   ],
   controllers: [],

@@ -1,8 +1,9 @@
 import Joi from "joi";
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Comuna } from "src/modules/comuna/comuna.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryColumn, RelationId } from "typeorm";
 
 @Entity('paciente')
 export class Paciente {
@@ -55,11 +56,19 @@ export class Paciente {
     })
     direccion!: string;
 
-    @Column({
-        type:'int',
+    @ManyToMany(()=> Comuna,{
+        nullable:true,
+        onDelete:'SET NULL',
+        onUpdate:'CASCADE'
     })
-    comuna_id!:number;
+    @JoinColumn({
+        name:'comuna_id',
+        referencedColumnName:'comuna_id'
+    })
+    comuna?:Comuna
 
+    @RelationId((paciente:Paciente)=>paciente.comuna)
+    comuna_id?:number;
 
     @OneToOne(()=>Usuario,(usuario) => usuario.paciente, {
         onDelete: 'CASCADE',

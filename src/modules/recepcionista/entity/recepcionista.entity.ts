@@ -1,6 +1,8 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Comuna } from "src/modules/comuna/comuna.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, RelationId } from "typeorm";
+import { ManyToMany } from "typeorm/browser";
 
 @Entity('recepcionista')
 export class Recepcionista{
@@ -46,11 +48,19 @@ export class Recepcionista{
     })
     direccion!: string;
 
-    @Column({
-        type:'int',
+    @ManyToOne(()=>Comuna,{
+        nullable:true,
+        onDelete:'SET NULL',
+        onUpdate:'CASCADE'
     })
-    comuna_id!:number;
+    @JoinColumn({
+        name:'comuna_id',
+        referencedColumnName:'comuna_id'
+    })
+    comuna?:Comuna
 
+    @RelationId((recepcionista:Recepcionista)=> recepcionista.comuna)
+    comuna_id?:number;
     
     @OneToOne(()=> Usuario,(usuario)=> usuario.medico,{
         onDelete: 'CASCADE',
