@@ -5,6 +5,8 @@ import { Paciente } from '../paciente/entity/paciente.entity';
 import { Administrador } from '../administrador/entity/administrador.entity';
 import { Medico } from '../medico/entity/medico.entity';
 import { Recepcionista } from '../recepcionista/entity/recepcionista.entity';
+import { Comuna } from '../comuna/entity/comuna.entity';
+import { Especialidad } from '../especialidad/entity/especialidad.entity';
 
 @Module({
     imports:[
@@ -15,7 +17,15 @@ import { Recepcionista } from '../recepcionista/entity/recepcionista.entity';
             username: 'admin',
             password: 'yGRSK5hLAtmpfMc',
             database: 'curimedDb',
-            entities:[Usuario,Paciente,Administrador,Medico,Recepcionista],
+            entities:[
+                Usuario,
+                Paciente,
+                Administrador,
+                Medico,
+                Recepcionista,
+                Comuna,
+                Especialidad
+            ],
         }),
     ]
 })

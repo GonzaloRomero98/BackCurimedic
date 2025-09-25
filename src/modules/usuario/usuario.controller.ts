@@ -11,5 +11,10 @@ export class UsuarioController {
         return this.usuarioService.agregarUsuario(crearUsuario)
     }
 
+    @Get('/all')
+    ObtenerUsuarios(){
+        return this.usuarioService.obtenerUsuarios()
+    }
+
     
 }

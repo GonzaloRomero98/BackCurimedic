@@ -33,7 +33,7 @@ export class MedicoService{
             celular: crearMedicodto.celular,
             fecha_nacimiento: crearMedicodto.fecha_nacimiento,
             direccion: crearMedicodto.direccion,
-            especialidad: crearMedicodto.especialidad,
+            especialidad_id: crearMedicodto.especialidad,
         });
 
         return this.medicoRepository.save(nuevoMedico);

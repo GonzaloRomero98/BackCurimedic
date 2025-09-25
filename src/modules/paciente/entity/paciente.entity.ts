@@ -1,9 +1,9 @@
 import Joi from "joi";
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
-import { Comuna } from "src/modules/comuna/comuna.entity";
+import { Comuna } from "src/modules/comuna/entity/comuna.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
-import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryColumn, RelationId } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, RelationId } from "typeorm";
 
 @Entity('paciente')
 export class Paciente {
@@ -56,7 +56,7 @@ export class Paciente {
     })
     direccion!: string;
 
-    @ManyToMany(()=> Comuna,{
+    @ManyToOne(()=> Comuna,{
         nullable:true,
         onDelete:'SET NULL',
         onUpdate:'CASCADE'

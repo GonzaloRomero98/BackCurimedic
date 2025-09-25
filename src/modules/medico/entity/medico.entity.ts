@@ -1,4 +1,5 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Comuna } from "src/modules/comuna/entity/comuna.entity";
 import { Especialidad } from "src/modules/especialidad/entity/especialidad.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
@@ -54,10 +55,19 @@ export class Medico{
     })
     direccion!:string;
 
-    @Column({
-        type:'int',
+    @ManyToOne(()=>Comuna,{
+        nullable:true,
+        onDelete:'SET NULL',
+        onUpdate:'CASCADE'
     })
-    comuna_id!:number;
+    @JoinColumn({
+        name:'comuna_id',
+        referencedColumnName:'comuna_id'
+    })
+    comuna?:Comuna;
+
+    @RelationId((medico:Medico)=>medico.comuna)
+    comuna_id?:number;
 
 
     @OneToOne(()=> Usuario,(usuario)=> usuario.medico,{

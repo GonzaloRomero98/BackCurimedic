@@ -33,4 +33,8 @@ export class UsuarioService {
         return this.usuarioRepository.findOne({where:{correo:correo}});
     }
 
+    async obtenerUsuarios():Promise<Usuario[]>{
+        return await this.usuarioRepository.find();
+    }
+
 }

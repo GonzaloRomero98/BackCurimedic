@@ -1,5 +1,5 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
-import { Comuna } from "src/modules/comuna/comuna.entity";
+import { Comuna } from "src/modules/comuna/entity/comuna.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, RelationId } from "typeorm";
 import { ManyToMany } from "typeorm/browser";
