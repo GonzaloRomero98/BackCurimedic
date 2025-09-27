@@ -1,6 +1,29 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Especialidad } from "./entity/especialidad.entity";
+import { Repository } from "typeorm";
+import { CrearEspecialidad } from "./dto/crearEspecialidad.dto";
 
 @Injectable()
 export class EspecialidadService{
-    constructor(){}
+    constructor(
+        @InjectRepository(Especialidad)
+        private readonly EspecialidadRepository:Repository<Especialidad>,
+    ){}
+
+    async crearEspecialidad(crearEspecialidad:CrearEspecialidad){
+        const especialidadExiste = await this.EspecialidadRepository.findOne({where:{nombre:crearEspecialidad.nombre}})
+        if(especialidadExiste){
+            return new ConflictException('La especialidad no existe');
+        }
+        const nuevaEspecialidad = this.EspecialidadRepository.create({
+            nombre:crearEspecialidad.nombre,
+            activo:true
+        });
+        return this.EspecialidadRepository.save(nuevaEspecialidad);
+    }
+
+    async obtenerEspecialiddes():Promise<Especialidad[]>{
+        return await this.EspecialidadRepository.find();
+    }
 }

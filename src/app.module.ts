@@ -8,6 +8,7 @@ import { RecepcionistaModule } from './modules/recepcionista/recepcionista.modul
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { EspecialidaModule } from './modules/especialidad/especialida.module';
+import { ComunaModule } from './modules/comuna/comuna.module';
 
 
 @Module({
@@ -23,7 +24,8 @@ import { EspecialidaModule } from './modules/especialidad/especialida.module';
     MedicoModule,
     RecepcionistaModule,
     EspecialidaModule,
-    AuthModule
+    AuthModule,
+    ComunaModule
   ],
   controllers: [],
   providers: [],

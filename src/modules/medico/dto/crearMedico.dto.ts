@@ -31,11 +31,7 @@ export class CrearMedicoDto{
     @IsString()
     @Length(1,150)
     direccion!:string
-
-    @IsString()
-    @Length(1,255)
-    especialidad!:number;
-
+    
     @Type(() => Number)
     @IsInt()
     @IsNotEmpty()

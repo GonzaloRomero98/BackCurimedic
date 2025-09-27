@@ -89,7 +89,7 @@ export class Medico{
         name:'especialidad_id',
         referencedColumnName:'especialidad_id'
     })
-    especialidad!:Especialidad;
+    especialidad?:Especialidad;
 
     @RelationId((medico: Medico)=> medico.especialidad)
     especialidad_id?:number;
