@@ -37,4 +37,8 @@ export class UsuarioService {
         return await this.usuarioRepository.find();
     }
 
+    async eliminarUsuario(id:string){
+        return await this.usuarioRepository.delete(id)
+    }
+
 }

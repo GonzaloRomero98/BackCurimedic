@@ -36,26 +36,23 @@ export class MedicoService{
 
         let especialidad: Especialidad | null = null;
         if (crearMedicodto.especialidad_id != null) {especialidad = await this.especialidadRepository.findOne({where: { especialidad_id: crearMedicodto.especialidad_id },});
-    if (!especialidad) throw new ConflictException('La especialidad no existe');
+        if (!especialidad){
+            throw new ConflictException('La especialidad no existe');
+        } 
   }
-        console.log(crearMedicodto.especialidad_id)
 
         const nuevoMedico = this.medicoRepository.create({
-            usuario: usuarioExistente, // Asignar la entidad usuario
+            usuario: usuarioExistente,
             rut_medico: crearMedicodto.rut_medico,
             nombres: crearMedicodto.nombres,
             apellidos: crearMedicodto.apellidos,
             celular: crearMedicodto.celular,
-    // Si tu columna es DATE, puedes castear a Date para consistencia:
             fecha_nacimiento: new Date(crearMedicodto.fecha_nacimiento),
             direccion: crearMedicodto.direccion,
-
-    // ← RELACIONES: usa los stubs con la PK correcta
             comuna: comuna,
             especialidad: especialidad ? especialidad : undefined,
          });
 
-        console.log(nuevoMedico)
         return this.medicoRepository.save(nuevoMedico);
     }
 

@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, Length, IsDateString, IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, Length, IsDateString, IsUUID, IsInt } from 'class-validator';
 
 export class CrearPacienteDto{
     @IsUUID()
@@ -25,9 +26,14 @@ export class CrearPacienteDto{
 
     @IsDateString()
     @IsNotEmpty()
-    fecha_nacimiento!:Date
+    fecha_nacimiento!:string
 
     @IsString()
     @Length(1,150)
     direccion!:string
+
+    @Type(() => Number)
+    @IsInt()
+    @IsNotEmpty()
+    comuna_id!: number;
 }

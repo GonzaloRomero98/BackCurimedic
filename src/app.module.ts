@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { EspecialidaModule } from './modules/especialidad/especialida.module';
 import { ComunaModule } from './modules/comuna/comuna.module';
+import { ServicioModule } from './modules/serivicio/sercicio.module';
 
 
 @Module({
@@ -25,6 +26,7 @@ import { ComunaModule } from './modules/comuna/comuna.module';
     RecepcionistaModule,
     EspecialidaModule,
     AuthModule,
+    ServicioModule,
     ComunaModule
   ],
   controllers: [],
