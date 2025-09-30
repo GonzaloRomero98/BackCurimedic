@@ -1,8 +1,11 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Medico } from "src/modules/medico/entity/medico.entity";
+import { Paciente } from "src/modules/paciente/entity/paciente.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Cita{
+    //Columna de la id de la cita
     @PrimaryColumn({
         name:'cita_id',
         type:'binary',
@@ -11,6 +14,7 @@ export class Cita{
     })
     cita_id!:string;
 
+    //Columna de id del paciente
     @Column({
         name:'paciente_id',
         type:"binary",
@@ -20,6 +24,7 @@ export class Cita{
     })
     paciente_id!:string;
 
+    //Columna de la id del medico
     @Column({
         name:'medico_id',
         type:'binary',
@@ -29,6 +34,7 @@ export class Cita{
     })
     medico_id!:string;
 
+    //Columna de la id del servicio
     @Column({
         name:'servicio_id',
         type:'int',
@@ -36,6 +42,7 @@ export class Cita{
     })
     servicio_id!:number;
 
+    //Columna de la hora de inicio de la cita
     @Column({
         name:'inicio_cita',
         type:'datetime',
@@ -44,6 +51,7 @@ export class Cita{
     })
     inicio_cita!:Date;
 
+    //Columna de la hora final de la cita
     @Column({
         name:'fin_cita',
         type:'datetime',
@@ -52,9 +60,31 @@ export class Cita{
     })
     fin_cita!:Date;
 
+    //Estado de la cita
     @Column({
         name:'estado',
-        enum:['PENDIENTE','CANCELADA','REALIZADA']
+        enum:['PENDIENTE','CANCELADA','REALIZADA'],
+        default:'PENDIENTE'
     })
     estado!: 'PENDIENTE'|'CANCELADA'|'REALIZADA';
+
+    //MUCHAS CITAS TIENE 1 SOLO PACIENTE
+    @ManyToOne(()=> Paciente,(paciente)=> paciente.cita,{
+        onDelete:'RESTRICT',
+    })
+    @JoinColumn({
+        name:'paciente_id',
+        referencedColumnName:'usuario_id'
+    })
+    paciente!:Paciente;
+
+
+    @ManyToOne(()=> Medico,(medico)=> medico.cita,{
+        onDelete:'RESTRICT',
+    })
+    @JoinColumn({
+        name:'medico_id',
+        referencedColumnName:'usuario_id'
+    })
+    medico!:Medico;
 }

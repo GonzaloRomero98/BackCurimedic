@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Cita } from "src/modules/cita/entity/cita.entity";
 import { Comuna } from "src/modules/comuna/entity/comuna.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
 import { Usuario } from "src/modules/usuario/entity/usuario.entity";
@@ -80,8 +81,7 @@ export class Paciente {
     })
     usuario!: Usuario;
 
-    /*@OneToMany(()=> AgendaCita,(agendacita)=>agendacita.paciente)
-    agendacita!: AgendaCita[]*/
-
+    @OneToMany(()=>Cita,(cita)=>cita.paciente)
+    cita?:Cita[];
 
 }

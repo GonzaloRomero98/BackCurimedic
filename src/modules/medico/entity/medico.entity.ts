@@ -1,4 +1,5 @@
 import { uuidToBinaryTrans } from "src/common/transformers/uuidBinary.transformer";
+import { Cita } from "src/modules/cita/entity/cita.entity";
 import { Comuna } from "src/modules/comuna/entity/comuna.entity";
 import { Especialidad } from "src/modules/especialidad/entity/especialidad.entity";
 //import { AgendaCita } from "src/modules/agenda/entity/agenda.entity";
@@ -94,6 +95,6 @@ export class Medico{
     @RelationId((medico: Medico)=> medico.especialidad)
     especialidad_id?:number;
 
-   /* @OneToMany(()=> AgendaCita,(agendacita)=>agendacita.medico)
-    agendacita!:AgendaCita[]*/
+   @OneToMany(()=>Cita, (cita)=>cita.medico)
+   cita!:Cita[];
 }

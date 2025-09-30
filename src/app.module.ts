@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { EspecialidaModule } from './modules/especialidad/especialida.module';
 import { ComunaModule } from './modules/comuna/comuna.module';
 import { ServicioModule } from './modules/serivicio/sercicio.module';
+import { CitaModule } from './modules/cita/cita.module';
 
 
 @Module({
@@ -27,6 +28,7 @@ import { ServicioModule } from './modules/serivicio/sercicio.module';
     EspecialidaModule,
     AuthModule,
     ServicioModule,
+    CitaModule,
     ComunaModule
   ],
   controllers: [],

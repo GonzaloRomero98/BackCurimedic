@@ -8,6 +8,7 @@ import { Recepcionista } from '../recepcionista/entity/recepcionista.entity';
 import { Comuna } from '../comuna/entity/comuna.entity';
 import { Especialidad } from '../especialidad/entity/especialidad.entity';
 import { Servicio } from '../serivicio/entity/servicio.entity';
+import { Cita } from '../cita/entity/cita.entity';
 
 @Module({
     imports:[
@@ -26,7 +27,8 @@ import { Servicio } from '../serivicio/entity/servicio.entity';
                 Recepcionista,
                 Comuna,
                 Especialidad,
-                Servicio
+                Servicio,
+                Cita
             ],
         }),
     ]
