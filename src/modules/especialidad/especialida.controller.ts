@@ -4,7 +4,9 @@ import { CrearEspecialidad } from "./dto/crearEspecialidad.dto";
 
 @Controller('especialidad')
 export class EspecialidaController{
-    constructor(private especialidadService:EspecialidadService){}
+    constructor(
+        private especialidadService:EspecialidadService
+    ){}
 
     @Post()
     @HttpCode(201)

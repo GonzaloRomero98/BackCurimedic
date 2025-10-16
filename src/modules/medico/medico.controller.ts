@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post,Get } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post,Get, ParseIntPipe, Param } from "@nestjs/common";
 import { MedicoService } from "./medico.service";
 import { CrearMedicoDto } from "./dto/crearMedico.dto";
 
@@ -18,8 +18,13 @@ export class MedicoController{
         return this.medicoService.buscarMedico(usuario_id);
     }
 
-    @Get('/aLL')
+    @Get('/all')
     getAllMedicos(){
         return this.medicoService.buscarTodosMedicos();
+    }
+
+    @Get('/especialidad/:id')
+    getMedicosbyEspecialidad(@Param('id',ParseIntPipe) especialidadId:number){
+        return this.medicoService.buscarMedicosPorEspecialidad(especialidadId);
     }
 }

@@ -61,7 +61,21 @@ export class MedicoService{
         return medicoBusqueda;
     }
 
-    async buscarTodosMedicos():Promise<Medico[]>{
-        return await this.medicoRepository.find();
+    async buscarTodosMedicos():Promise<Pick<Medico,'rut_medico'|'nombres'|'apellidos'| 'especialidad_id'>[]>{
+        const medico =  await this.medicoRepository.find({
+            select:{
+                rut_medico:true,
+                nombres:true,
+                apellidos:true,
+                especialidad:true
+            },
+            order:{apellidos:'ASC'}
+        });
+        console.log(medico);
+        return medico;
+    }
+
+    async buscarMedicosPorEspecialidad(especialidadId:number):Promise<Medico[]>{
+        return await this.medicoRepository.find({where:{especialidad:{especialidad_id:especialidadId}}});
     }
 }

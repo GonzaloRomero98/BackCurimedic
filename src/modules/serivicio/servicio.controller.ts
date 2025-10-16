@@ -5,7 +5,7 @@ import { ServicioService } from "./servicio.service";
 export class ServicioController{
     constructor(private servicioService:ServicioService){}
 
-    @Get()
+    @Get('all')
     obtenerServicio(){
         return this.servicioService.getSerivicios();
     }

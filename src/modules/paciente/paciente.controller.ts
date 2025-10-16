@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post } from "@nestjs/common";
 import { PacienteService } from "./paciente.service";
 import { CrearPacienteDto } from "./dto/crearPaciente.dto";
 
@@ -22,5 +22,11 @@ export class PacienteController {
     @Get('/all')
     obtenerAllPacientes(){
         return this.pacienteServive.buscarTodosPacientes()
+    }
+
+    @Get('/rut/:rut')
+    @HttpCode(200)
+    obtenerPacienteByRut(@Param('rut') rut:string){
+        return this.pacienteServive.buscarPacienteByRut(rut)
     }
 }

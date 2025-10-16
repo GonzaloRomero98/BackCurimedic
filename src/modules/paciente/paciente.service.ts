@@ -6,6 +6,15 @@ import { Usuario } from "../usuario/entity/usuario.entity";
 import { CrearPacienteDto } from "./dto/crearPaciente.dto";
 import { Comuna } from "../comuna/entity/comuna.entity";
 
+type PacienteByRut = {
+    rut_paciente:string;
+    nombres:string;
+    apellidos:string;
+    celular:string;
+    direccion:string;
+    comuna_id:number | null;
+}
+
 @Injectable()
 export class PacienteService {
     constructor(
@@ -52,4 +61,32 @@ export class PacienteService {
     async buscarTodosPacientes():Promise<Paciente[]>{
         return await this.pacienteRepository.find();
     }
+
+    async buscarPacienteByRut(rut: string): Promise<PacienteByRut | null> {
+        const paciente = await this.pacienteRepository.findOne({
+            select: {
+                usuario_id: true,
+                rut_paciente: true,
+                nombres: true,
+                apellidos: true,
+                celular: true,
+                direccion: true,
+            },
+            where: { rut_paciente: rut },
+            relations: { comuna: true }
+        });
+        if (!paciente) {
+            return null;
+        }
+        console.log(paciente);
+        return {
+            rut_paciente: paciente.rut_paciente,
+            nombres: paciente.nombres,
+            apellidos: paciente.apellidos,
+            celular: paciente.celular,
+            direccion: paciente.direccion,
+            comuna_id: paciente.comuna?.comuna_id ?? null
+        };
+    }
+
 }

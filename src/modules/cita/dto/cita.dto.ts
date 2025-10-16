@@ -1,4 +1,4 @@
-import { IsDateString, IsIn, IsInt, IsNotEmpty, IsString, Length } from "class-validator";
+import { IsDateString, IsIn, IsInt, IsNotEmpty, IsString, Length, Matches } from "class-validator";
 
 export class CitaDto{
     @IsString()
@@ -14,13 +14,12 @@ export class CitaDto{
     @IsInt()
     servicio_id:number;
 
-    @IsDateString()
+    @Matches(/^\d{4}-\d{2}-\d{2}$/, { message: 'La fecha debe estar en formato AAAA-MM-DD' })
     @IsNotEmpty()
-    hora_inicio!:string
+    fecha_cita!:string;
 
-    @IsDateString()
+    @Matches(/^([01]\d|2[0-3]):00$/, { message: 'La hora de inicio debe estar en formato HH:MM:SS' })
     @IsNotEmpty()
-    hora_final!:string
-
+    hora_inicio!:string;
 
 }
