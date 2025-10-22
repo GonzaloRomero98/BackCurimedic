@@ -15,4 +15,6 @@ export class RecepcionistaController{
     obtenerAllRecepcionistar(){
         return this.recepcionistaService.buscarTodosRecepcionsta();
     }
+
+    
 }

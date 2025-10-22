@@ -13,6 +13,13 @@ export class Recepcionista{
         transformer: new uuidToBinaryTrans(),
     })
     usuario_id!: string;
+
+    @Column({
+        name:'rut_recepcionista',
+        type:'varchar',
+        length:15
+    })
+    rut_recepcionista!:string;
     
     @Column({
         type:'varchar',

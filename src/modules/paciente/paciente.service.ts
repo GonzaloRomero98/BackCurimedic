@@ -34,23 +34,30 @@ export class PacienteService {
 
         const pacienteRutExistente = await this.pacienteRepository.findOne({where:{rut_paciente:crearPacientedto.rut_paciente}})
         if(pacienteRutExistente){
+            await this.usuarioRepository.delete(usuarioExistente.id);
             throw new ConflictException('El rut ingresado ya existe');
         }
 
         const comuna = await this.comunaRepository.findOne({ where: { comuna_id: crearPacientedto.comuna_id }});
         if (!comuna) throw new ConflictException('La comuna no existe');
 
-        const nuevoPaciente = this.pacienteRepository.create({
-            usuario: usuarioExistente,
-            rut_paciente: crearPacientedto.rut_paciente,
-            nombres: crearPacientedto.nombres,
-            apellidos: crearPacientedto.apellidos,
-            celular: crearPacientedto.celular,
-            fecha_nacimiento: new Date(crearPacientedto.fecha_nacimiento),
-            direccion: crearPacientedto.direccion,
-            comuna: comuna
-        });
-        return this.pacienteRepository.save(nuevoPaciente);
+        try{
+            const nuevoPaciente = this.pacienteRepository.create({
+                usuario: usuarioExistente,
+                rut_paciente: crearPacientedto.rut_paciente,
+                nombres: crearPacientedto.nombres,
+                apellidos: crearPacientedto.apellidos,
+                celular: crearPacientedto.celular,
+                fecha_nacimiento: new Date(crearPacientedto.fecha_nacimiento),
+                direccion: crearPacientedto.direccion,
+                comuna: comuna
+            });
+            return this.pacienteRepository.save(nuevoPaciente);
+        }catch(e:any){
+            await this.usuarioRepository.delete(usuarioExistente.id);
+
+        }
+
     }
 
     async buscarPaciente(usuario_id:string){

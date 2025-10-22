@@ -28,6 +28,7 @@ export class MedicoService{
 
         const medicoRutExistente = await this.medicoRepository.findOne({where:{rut_medico:crearMedicodto.rut_medico}})
         if(medicoRutExistente){
+            await this.usuarioRepository.delete(usuarioExistente.id);
             throw new ConflictException('El rut ingresado ya existe');
         }
 
@@ -35,25 +36,29 @@ export class MedicoService{
         if (!comuna) throw new ConflictException('La comuna no existe');
 
         let especialidad: Especialidad | null = null;
-        if (crearMedicodto.especialidad_id != null) {especialidad = await this.especialidadRepository.findOne({where: { especialidad_id: crearMedicodto.especialidad_id },});
-        if (!especialidad){
-            throw new ConflictException('La especialidad no existe');
-        } 
-  }
+        if (crearMedicodto.especialidad_id != null) {
+            especialidad = await this.especialidadRepository.findOne({where: { especialidad_id: crearMedicodto.especialidad_id },});
+            if (!especialidad){
+                throw new ConflictException('La especialidad no existe');
+            } 
+        }
+        try{
+            const nuevoMedico = this.medicoRepository.create({
+                usuario: usuarioExistente,
+                rut_medico: crearMedicodto.rut_medico,
+                nombres: crearMedicodto.nombres,
+                apellidos: crearMedicodto.apellidos,
+                celular: crearMedicodto.celular,
+                fecha_nacimiento: new Date(crearMedicodto.fecha_nacimiento),
+                direccion: crearMedicodto.direccion,
+                comuna: comuna,
+                especialidad: especialidad ? especialidad : undefined,
+            });
 
-        const nuevoMedico = this.medicoRepository.create({
-            usuario: usuarioExistente,
-            rut_medico: crearMedicodto.rut_medico,
-            nombres: crearMedicodto.nombres,
-            apellidos: crearMedicodto.apellidos,
-            celular: crearMedicodto.celular,
-            fecha_nacimiento: new Date(crearMedicodto.fecha_nacimiento),
-            direccion: crearMedicodto.direccion,
-            comuna: comuna,
-            especialidad: especialidad ? especialidad : undefined,
-         });
-
-        return this.medicoRepository.save(nuevoMedico);
+            return this.medicoRepository.save(nuevoMedico);
+        }catch(e:any){
+            await this.usuarioRepository.delete(usuarioExistente.id);
+        }
     }
 
     async buscarMedico(usuario_id:string){
