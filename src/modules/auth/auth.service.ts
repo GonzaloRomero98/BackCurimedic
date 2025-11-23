@@ -6,6 +6,7 @@ import { PacienteService } from "../paciente/paciente.service";
 import { MedicoService } from "../medico/medico.service";
 import { AdministradorService } from "../administrador/administrador.service";
 import { RecepcionistaService } from "../recepcionista/recepcionista.service";
+import { th } from "date-fns/locale";
 
 
 @Injectable()
@@ -57,6 +58,23 @@ export class AuthService{
             return await this.administradorService.buscarAdministrador(id);
         }else{
             return await this.recepcionistaService.buscarRecepcionista(id);
+        }
+    }
+
+    async verificarToken(token:string){
+        try{
+            const payload = await this.jwtService.verify(token);
+            const usuario = await this.usuarioService.obtenerUsuarioById(payload.sub);
+            if(!usuario){
+                throw new UnauthorizedException('Usuario no encontrado');
+            }
+            return{
+                id: usuario.id,
+                correo: payload.correo,
+                rol: payload.rol
+            };
+        }catch(err){
+            throw new UnauthorizedException('Token invalido');
         }
     }
 }

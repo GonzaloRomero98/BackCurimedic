@@ -15,4 +15,9 @@ export class ComunaController{
     async obternerComunaByName(@Param('nombre') nombre: string){
         return await this.comunaService.getComunaByName(nombre);
     }
+
+    @Get('id/:comuna_id')
+    async obternerComunaById(@Param('comuna_id') comuna_id: number){
+        return await this.comunaService.getComunaById(comuna_id);
+    }
 }

@@ -24,6 +24,11 @@ export class EspecialidadService{
     }
 
     async obtenerEspecialiddes():Promise<Especialidad[]>{
+        console.log("entro al service");
         return await this.EspecialidadRepository.find();
+    }
+
+    async obtenerEspecialidadById(especialidad_id:number){
+        return await this.EspecialidadRepository.findOne({where:{especialidad_id}});
     }
 }

@@ -9,6 +9,7 @@ export class AuthController{
     @HttpCode(HttpStatus.OK)
     @Post('login')
     async login(@Body() logindto:LoginDto){
+        console.log('llego al controlador');
         return await this.authService.login(logindto.correo,logindto.contrasena)
     }
 }

@@ -11,6 +11,8 @@ import { EspecialidaModule } from './modules/especialidad/especialida.module';
 import { ComunaModule } from './modules/comuna/comuna.module';
 import { ServicioModule } from './modules/serivicio/sercicio.module';
 import { CitaModule } from './modules/cita/cita.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { WebRtcModule } from './modules/webRtc/webRtc.module';
 
 
 @Module({
@@ -19,6 +21,7 @@ import { CitaModule } from './modules/cita/cita.module';
       isGlobal:true,
       envFilePath: '.env'
     }),
+    ScheduleModule.forRoot(),
     UsuarioModule,
     DatabaseModule,
     PacienteModule,
@@ -29,7 +32,8 @@ import { CitaModule } from './modules/cita/cita.module';
     AuthModule,
     ServicioModule,
     CitaModule,
-    ComunaModule
+    ComunaModule,
+    WebRtcModule
   ],
   controllers: [],
   providers: [],

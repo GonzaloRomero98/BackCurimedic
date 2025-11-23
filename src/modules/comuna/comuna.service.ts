@@ -17,4 +17,8 @@ export class ComunaService{
     async getComunaByName(nomnbre_comuna:string){
         return await this.comunaRepository.findOne({where:{nombre:nomnbre_comuna}})
     }
+    
+    async getComunaById(comuna_id:number){
+        return await this.comunaRepository.findOne({where:{comuna_id}});
+    }
 }

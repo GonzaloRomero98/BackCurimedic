@@ -22,12 +22,13 @@ import { AdministradorModule } from "../administrador/administrador.module";
             inject:[ConfigService],
             useFactory:async (cfg:ConfigService)=>({
                 secret: cfg.get<string>('JWT_SECRET'),
-                signOptions:{expiresIn:'1h'}
+                signOptions:{expiresIn:'30m'}
             })
         })
     ],
     controllers:[AuthController],
-    providers:[AuthService]
+    providers:[AuthService],
+    exports:[AuthService]
 })
 
 export class AuthModule{}

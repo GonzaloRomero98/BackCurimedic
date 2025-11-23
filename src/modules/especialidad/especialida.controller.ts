@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post } from "@nestjs/common";
 import { EspecialidadService } from "./especialidad.service";
 import { CrearEspecialidad } from "./dto/crearEspecialidad.dto";
 
@@ -14,8 +14,15 @@ export class EspecialidaController{
         return await this.especialidadService.crearEspecialidad(crearEspecialidad);
     }
 
-    @Get('')
+    @Get()
     async obtenerEspecialidad(){
+        console.log("entro al controller");
         return this.especialidadService.obtenerEspecialiddes()
+    }
+
+    @Get(':especialidad_id')
+    async obtenerEspecialidadById(@Param('especialidad_id') especialidad_id:number){
+        console.log(especialidad_id);
+        return this.especialidadService.obtenerEspecialidadById(especialidad_id)
     }
 }

@@ -97,9 +97,9 @@ export class CitaService{
         const slots: Slot[] = [];
         let cursor = inicioJornada;
 
-        while (cursor < finJornada) { // mejor < que <= para no sumar el último duplicado
+        while (cursor < finJornada) {
             const slotStart = cursor;
-            const slotEnd   = addMinutes(slotStart, 59); // bloque de 1 hora completo
+            const slotEnd   = addMinutes(slotStart, 59);
 
             const inicio = format(slotStart, "yyyy-MM-dd'T'HH:mm:ss");
             const fin    = format(slotEnd,   "yyyy-MM-dd'T'HH:mm:ss"); 
@@ -129,5 +129,22 @@ export class CitaService{
             if (fecha_cita === hoy && parseInt(hh, 10) <= horaActual) s.desabilitado = true;
         }
         return slots;
+    }
+
+    async obtenerCitasByRutMedico(rut_medico:string){
+        const medico = await this.medicoRepository.findOne({where:{rut_medico:rut_medico}, select:['usuario_id']});
+        if(!medico){
+            throw new NotFoundException('Médico no encontrado');
+        }
+        return await this.citaRepository.find({where:{medico_id:medico.usuario_id}});
+    }
+
+    async obtenerCitasByRutPaciente(rut_paciente:string){
+        const paciente = await this.pacienteRepository.findOne({where:{rut_paciente:rut_paciente},select:['usuario_id']})
+        if(!paciente){
+            throw new NotFoundException('Médico no encontrado');
+        }
+
+        return await this.citaRepository.find({where:{paciente_id:paciente.usuario_id}});
     }
 }

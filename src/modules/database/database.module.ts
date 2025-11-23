@@ -9,27 +9,32 @@ import { Comuna } from '../comuna/entity/comuna.entity';
 import { Especialidad } from '../especialidad/entity/especialidad.entity';
 import { Servicio } from '../serivicio/entity/servicio.entity';
 import { Cita } from '../cita/entity/cita.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports:[
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: 'curimeddb.cnucgwsko5jy.us-east-1.rds.amazonaws.com',
-            port: 3306,
-            username: 'admin',
-            password: 'yGRSK5hLAtmpfMc',
-            database: 'curimedDb',
-            entities:[
-                Usuario,
-                Paciente,
-                Administrador,
-                Medico,
-                Recepcionista,
-                Comuna,
-                Especialidad,
-                Servicio,
-                Cita
-            ],
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject:[ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                type: 'mysql',
+                host: configService.get<string>('DB_HOST'),
+                port: configService.get<number>('DB_PORT'),
+                username: configService.get<string>('DB_USER'),
+                password: configService.get<string>('DB_PASS'),
+                database: configService.get<string>('DB_NAME'),
+                entities:[
+                    Usuario,
+                    Paciente,
+                    Administrador,
+                    Medico,
+                    Recepcionista,
+                    Comuna,
+                    Especialidad,
+                    Servicio,
+                    Cita
+                ],
+            }),
         }),
     ]
 })
