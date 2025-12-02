@@ -9,6 +9,7 @@ import { randomUUID } from "crypto";
 import { ConsultarCitaSlotDto } from "./dto/consultaCitaSlot.dto";
 import { addHours, addMinutes, format, isBefore, parse } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz'; 
+import { MailerService } from "src/common/mail/mail.service";
 
 type Slot ={
     inicio: string;
@@ -27,6 +28,8 @@ export class CitaService{
 
         @InjectRepository(Cita)
         private readonly citaRepository:Repository<Cita>,
+
+        private readonly mailerService: MailerService,
     ){}
 
     async crearCita(citadto:CitaDto){
@@ -63,6 +66,32 @@ export class CitaService{
             inicio_cita:citadto.hora_inicio,
         });
         try{
+            const correoPaciente =
+                (existePaciente as any).correo ||
+                (existePaciente as any).email ||
+                (existePaciente as any).correo_paciente;
+
+            const nombrePaciente =
+                ((existePaciente as any).nombre || '') +
+                ' ' +
+                ((existePaciente as any).apellido || '');
+
+            const nombreMedico =
+                ((existeMedico as any).nombre || '') +
+                ' ' +
+                ((existeMedico as any).apellido || '');
+
+            if (correoPaciente) {
+                await this.mailerService.enviarAgendamiento(
+                    correoPaciente,
+                    nombrePaciente.trim() || 'Paciente',
+                    citadto.fecha_cita,
+                    nombreMedico.trim() || undefined,
+                );
+            } else {
+                // opcional: log si el paciente no tiene correo
+                console.warn('Paciente sin correo, no se envía email de cita');
+            }
             return this.citaRepository.save(nuevaCita);
         }catch(e){
             if(e?.code === 'ER_DUP_ENTRY' || e?.code === '1062'){
