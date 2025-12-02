@@ -13,6 +13,7 @@ import { ServicioModule } from './modules/serivicio/sercicio.module';
 import { CitaModule } from './modules/cita/cita.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { WebRtcModule } from './modules/webRtc/webRtc.module';
+import { MailerModule } from './common/mail/mail.module';
 
 
 @Module({
@@ -33,7 +34,8 @@ import { WebRtcModule } from './modules/webRtc/webRtc.module';
     ServicioModule,
     CitaModule,
     ComunaModule,
-    WebRtcModule
+    WebRtcModule,
+    MailerModule
   ],
   controllers: [],
   providers: [],
