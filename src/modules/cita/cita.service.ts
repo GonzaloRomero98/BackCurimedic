@@ -69,7 +69,7 @@ export class CitaService{
             const correoPaciente =
                 (existePaciente as any).correo ||
                 (existePaciente as any).email ||
-                (existePaciente as any).correo_paciente;
+                'curimedcurico559@gmail.com';
 
             const nombrePaciente =
                 ((existePaciente as any).nombre || '') +
@@ -89,7 +89,6 @@ export class CitaService{
                     nombreMedico.trim() || undefined,
                 );
             } else {
-                // opcional: log si el paciente no tiene correo
                 console.warn('Paciente sin correo, no se envía email de cita');
             }
             return this.citaRepository.save(nuevaCita);
